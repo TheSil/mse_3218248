@@ -1,0 +1,472 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=25mm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newcommand{\rad}{\operatorname{rad}}
+\newcommand{\Disc}{\operatorname{Disc}}
+\newcommand{\Res}{\operatorname{Res}}
+\title{Irreducibility of an arithmetic-progression polynomial}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{theorem}\label{main}
+For every integer $n\ge2$, the polynomial
+\[
+ f_n(x)=\sum_{k=1}^n kx^{n-k}
+       =x^{n-1}+2x^{n-2}+\cdots+(n-1)x+n
+\]
+is irreducible in $\mathbb Q[x]$ and in $\mathbb Z[x]$.
+\end{theorem}
+
+The proof compares a local estimate for the resultant of two putative
+factors with an estimate coming from the narrow annulus containing their
+complex roots. All logarithms are natural, and $\rad(m)$ denotes the
+product of the distinct prime divisors of $m$.
+
+\section{Roots and the arithmetic of a factor}
+
+Put $N=n+1$. Direct multiplication gives
+\begin{equation}\label{identities}
+ (x-1)f_n(x)=\sum_{j=1}^n x^j-n,\qquad
+ F(x):=(x-1)^2f_n(x)=x^N-Nx+n.
+\end{equation}
+Since $f_n(1)=nN/2$, the root $1$ of $F$ has multiplicity exactly two.
+A common root of $F$ and $F'$ must be $1$, so $f_n$ has simple roots.
+
+\begin{lemma}\label{roots}
+Every root $\alpha$ of $f_n$ satisfies
+\[
+ 1<|\alpha|<(2n+1)^{1/n}.
+\]
+Moreover, $|\alpha|^n>4$ if $n\ge3$, and
+$n\log|\alpha|>11/6$ if $n\ge8$.
+\end{lemma}
+\begin{proof}
+If $|\alpha|\le1$, the first identity in \eqref{identities} gives
+$n\le\sum_{j=1}^n|\alpha|^j\le n$; equality forces $\alpha=1$.
+The upper bound follows from $\alpha^n=N-n/\alpha$.
+
+There are no positive real roots. For an upper-half-plane root
+$\alpha=\rho e^{i\theta}$, the last identity gives
+$n\theta=2\pi k+\phi$ with $0<\phi<\pi/2$. If $k=0$, every
+nonconstant term of $f_n(\alpha)$ has positive imaginary part, a
+contradiction. Thus $\theta>2\pi/n$. When $\theta<\pi/2$,
+\[
+ \rho^n\ge N\sin\theta>4N/n>4;
+\]
+otherwise $\rho^n>N$. Negative real roots also satisfy $\rho^n>N$,
+and conjugation handles the lower half-plane.
+For $n\ge8$, the acute-angle estimate improves to
+$\rho^n>N\sin(2\pi/n)>2\pi>e^{11/6}$.
+Here $\sin t\ge t-t^3/6$ and
+$n^2/(n+1)\ge64/9>2\pi^2/3$ prove the middle inequality.
+\end{proof}
+
+Suppose henceforth that $f_n=gh$, where $g,h\in\mathbb Z[x]$ are
+monic and nonconstant. Write
+\[
+ d=\deg g,\quad a=g(0),\quad b=h(0),\quad
+ g_j=[x^j]g,\quad J=g_1-a g_{d-1}.
+\]
+Conjugate root pairs and negative real roots show that $a,b,g(1),h(1)$
+are positive integers. Lemma~\ref{roots} gives $a,b>1$.
+
+\begin{lemma}\label{arithmetic}
+For every such factorization,
+\begin{gather}
+ ab=n,\qquad (a,b)=(a,g_1)=(a,J)=1,\label{coprime}\\
+ a^N>(\sqrt{nN})^d,\qquad
+ a^N\equiv(-1)^d\pmod N,\qquad a^n\equiv1\pmod b,\label{norms}\\
+ 0<|J|\le K_n a\log a,\qquad
+ K_n=\frac{2\sinh(L/n)}{L/n},\quad L=\log(2n+1),\label{Jbound}\\
+ |\Disc(g)|\,|\Res(g,h)|\,a\,g(1)=(nN)^d.\label{discidentity}
+\end{gather}
+Here $K_n<21/10$ for $n\ge6$, and $K_n<201/100$ for $n\ge1000$.
+\end{lemma}
+\begin{proof}
+The linear coefficient gives $a h_1+b g_1=n-1$, proving
+\eqref{coprime}. In particular $n\ge6$.
+There are no real roots when $n$ is odd, by \eqref{identities}; hence
+$nd$ is always even. With $r=n/N$, multiplication over the roots of
+$g$ gives $a^N=N^d g(r)$. The inequality
+\[
+ |z-r|^2-r|z-1|^2=(1-r)(|z|^2-r)>0\quad(|z|>1)
+\]
+and $g(1)\ge1$ give the strict norm bound. Reducing the same identity
+modulo $N$ gives the first congruence. In
+$(\mathbb Z/b\mathbb Z)[x]/(g)$, the element $x$ is a unit and
+$x^n=1$; its determinant is $(-1)^d a$, giving the second congruence.
+
+The root formula
+$J=a\sum_\alpha(\alpha-\alpha^{-1})$, paired with its complex
+conjugate, yields
+$|J|\le a\sum_\alpha2\sinh(\log|\alpha|)\le K_n a\log a$.
+The stated constants follow from
+$\sinh t/t\le(1-t^2/6)^{-1}$ for the relevant $0<t<1/2$.
+Finally,
+$f_n'(\alpha)=nN/[\alpha(\alpha-1)]$ at every root of $f_n$.
+Multiplication over the roots of $g$ proves \eqref{discidentity}.
+\end{proof}
+
+\section{The local resultant estimate}
+
+For a prime $p\mid nN$, let $M$ be the member of $\{n,N\}$ divisible
+by $p$, and write $M=p^r m$ with $p\nmid m$. Work in a finite
+unramified extension $E/\mathbb Q_p$ containing the $m$th roots of
+unity, with valuation $v(p)=1$ and value group $\mathbb Z$.
+Such a field is obtained by taking a suitable finite residue field
+and lifting its roots of unity by Hensel's lemma.
+
+\begin{lemma}\label{local}
+Define $C_p(0)=C_p(1)=0$ and
+$C_p(r)=p^{r-1}+C_p(r-2)$ for $r\ge2$. Then
+\begin{equation}\label{localbound}
+ v_p\Res(g,h)\le mC_p(r)-2\lfloor r/2\rfloor.
+\end{equation}
+In addition,
+\begin{equation}\label{localJ}
+ \rad(bN)\mid J,\qquad d\equiv\boldsymbol{1}_{2\mid a}\pmod2.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The reductions of $F$ are $(x^m-1)^{p^r}$ if $p\mid N$, and
+$x(x^m-1)^{p^r}$ if $p\mid n$. In the latter case there is one
+residue-zero root, of valuation $r$; it belongs to $g$ precisely
+when $p\mid a$.
+
+Here is the Newton polygon calculation for the unit roots. The
+binomial valuations are
+\[
+\begin{array}{ll}
+ v_p\binom Nj=r-v_p(j),&p\mid N,\quad1\le j\le p^r,\\[2pt]
+ v_p\binom{n+1}j=r-v_p(j(j-1)),&p\mid n,\quad2\le j\le p^r+1.
+\end{array}
+\]
+They follow from $\binom{M-1}k\equiv(-1)^k\pmod p$ for $k<p^r$.
+At a nontrivial $m$th root of unity $\zeta$, the negative-slope
+vertices of $F(\zeta+y)$ are
+$(0,r),(p,r-1),\ldots,(p^r,0)$.
+For odd $p$ these give irreducible blocks of degrees
+\[
+ e_1=p,\qquad e_j=p^{j-1}(p-1)\quad(2\le j\le r),
+\]
+whose roots have displacement valuation $1/e_j$ from $\zeta$.
+At $\zeta=1$, remove the double root using
+$f_n(1+y)=\sum_{k=0}^{n-1}\binom{n+1}{k+2}y^k$;
+the first degree becomes $p-2$, with all later degrees unchanged.
+The Newton polygon theorem gives these factors in $E[x]$.
+They are irreducible because a factor with $s$ roots of
+valuation $1/e$ has constant-term valuation $s/e\in\mathbb Z$.
+
+For $p=2$, a nontrivial residue class has one irreducible quadratic
+when $r=1$. When $r\ge2$, its first two edges merge into a quartic
+of displacement valuation $1/2$, followed by irreducible blocks
+of degrees $4,8,\ldots,2^{r-1}$. The quartic's factors have even
+degree by the slope denominator two. At residue one the degrees
+are $2,4,\ldots,2^{r-1}$ for $r\ge2$, with no block for $r=1$.
+This lists all $n-1$ roots.
+
+First consider odd $p$. A rational factor selects whole blocks.
+Different residue classes contribute zero to the resultant valuation;
+two blocks $i<j$ in the same class contribute $e_i$ if assigned
+to different factors. Thus we must bound a graph cut with edge
+weight $e_i$ between $i<j$. Its maximum is $C_p(r)$:
+the last two vertices can be placed in opposite parts since
+$e_{r-1}\ge\sum_{i<r-1}e_i$; deleting them contributes exactly
+$\sum_{i<r}e_i=p^{r-1}$. At residue one this sum is $p^{r-1}-2$,
+so the bound is $C_p(r)-2\lfloor r/2\rfloor$.
+
+For the binary quartic $P$, the identity
+$F'(\alpha)=nN(\alpha-1)/\alpha$ gives $v(F'(\alpha))=r$,
+and the $r-2$ higher blocks each contribute one to this valuation.
+Thus $v(P'(\alpha))=2$ and $v(\Disc P)=8$.
+If $P$ splits between $g$ and $h$, both parts are quadratic.
+After translation, each has constant coefficient of valuation one
+and linear coefficient of valuation at least one; its discriminant
+has valuation at least two. The resultant between the two parts
+therefore has valuation at most $(8-2-2)/2=2$.
+Two formal vertices of weight two, joined by an edge of weight two,
+bound every assignment of this quartic. The same cut calculation
+now applies to the sequence $2,2,4,8,\ldots$; at residue one,
+insert an initial vertex of weight zero.
+Summing over the $m$ residue classes proves \eqref{localbound}.
+
+For $p\mid bN$, all roots of $g$ are units. Reduce in the residue
+field of a valued splitting extension. Every selected block at a
+nontrivial residue root has degree divisible by $p$, so its sum
+of $\alpha-\alpha^{-1}$ reduces to zero; roots at residue one
+also contribute zero. Thus $v_p(J)>0$, and integrality gives
+$v_p(J)\ge1$. At $p=2$ all unit blocks have even degree, proving
+the parity assertion as well.
+\end{proof}
+
+Put $R=\log|\Res(g,h)|$, $B=\tfrac12\log(nN)$, and
+$Q=\prod_{p^2\mid nN}p$. Formula \eqref{discidentity} shows that the
+resultant has no prime divisor outside $nN$. Lemma~\ref{local} gives
+\begin{equation}\label{budgets}
+ R\le\left(\frac N8-2\right)B+NC_8\quad(n\ge15),\qquad
+ R\le N\sum_{p\mid Q}\frac{p\log p}{p^2-1},
+\end{equation}
+where
+\[
+ C_8=\tfrac38\log2+\tfrac5{24}\log3+
+     \tfrac3{40}\log5+\tfrac1{56}\log7<\tfrac{13}{20}.
+\]
+Indeed, $C_p(r)/p^r=\sum_{j=1}^{\lfloor r/2\rfloor}p^{-(2j-1)}$.
+Subtract $1/8$ from each summand; positive excess occurs only in the
+first layers for $p=2,3,5,7$. With
+$B_0=\sum_p\lfloor v_p(nN)/2\rfloor\log p\le B$, this gives
+$R\le(N/8-2)B_0+NC_8$. The second bound follows from
+$C_p(r)<p^{r+1}/(p^2-1)$, and $C_p(1)=0$.
+
+\section{Excluding small constant terms}
+
+\begin{lemma}\label{primepower}
+If $n\ge2$ and $n+1$ is a prime power, then $f_n$ is irreducible.
+\end{lemma}
+\begin{proof}
+Suppose $N=p^r$ and choose $g$ of smaller degree, so
+$0<d<N/2\le\varphi(N)$. Modulo $p$, $f_n=(x-1)^{N-2}$.
+Every root $\alpha$ of $g$ has
+$v_p(\alpha-1)\ge1/d>1/\varphi(N)$, since its ramification index
+is at most its local field degree, which is at most $d$.
+Eisenstein's criterion for $\Phi_N(x+1)$ gives
+$v_p(\zeta-1)=1/\varphi(N)$ for primitive $N$th roots $\zeta$.
+Hence $v_p(\Phi_N(\alpha))=1$.
+Also $f_n(\zeta)=N/(1-\zeta)$, so
+\[
+ |\Res(f_n,\Phi_N)|=N^{\varphi(N)}/p,
+ \qquad |\Res(g,\Phi_N)|=p^d.
+\]
+The second equality follows because it divides the first integer
+and has $p$-adic valuation $d$.
+
+Let $H=\sqrt{nN}$. For odd $p$ and $r\ge3$, Lemma~\ref{roots} gives
+\[
+ |\Phi_N(\alpha)|\ge
+ \frac{|\alpha|^N-1}{|\alpha|^{N/p}+1}
+ >\tfrac38|\alpha|^{\varphi(N)}.
+\]
+Multiplying and using \eqref{norms} yields
+$p>\tfrac38H^{1-1/p}$, whereas
+$H>p^3-1>\tfrac89p^3$ implies
+$H^{1-1/p}>\tfrac89p^2\ge\tfrac83p$.
+For $p=2$, $\Phi_N(x)=x^{N/2}+1$ gives instead
+$2^d>a^{N/2}/2^d>(\sqrt H/2)^d$, hence $H<16$.
+This excludes $N\ge32$. For $N=4,8$ the constant $n$ is prime;
+for $N=16$ the constants would be $3,5$, contradicting
+$5^{15}\equiv1\pmod3$ in \eqref{norms}.
+
+If $N=p^2$ with odd $p$, one factor has even degree and the other
+odd degree. Their constants are respectively $1$ and $-1$ modulo
+$p$ by \eqref{norms}, so they are at least $p+1$ and $p-1$.
+Their product $p^2-1$ forces equality, contradicting coprimality.
+Finally, if $N=p$ is odd prime, $f_n(x+1)$ is Eisenstein at $p$.
+The value $N=2$ is excluded by $n\ge2$.
+\end{proof}
+
+\begin{lemma}\label{constants}
+Every nontrivial monic integer factorization has $a,b\ge13$;
+in particular, $n\ge182$.
+\end{lemma}
+\begin{proof}
+The integers $a,b,N$ are pairwise coprime. By Lemma~\ref{primepower},
+$N$ has at least two distinct prime divisors. Thus
+\[
+ 30\le\rad(bN)\le|J|<\tfrac{21}{10}a\log a,
+\]
+and the radical contains at least three primes coprime to $a$.
+This excludes $2\le a\le7$, since $\log7<2$. For
+$a=8,9,10,12$, the least possible products of three such primes
+are $105,70,231,385$, respectively; $\log a<3$ excludes each.
+
+If $a=11$, then $\rad(bN)<70$. This radical is even, is coprime
+to $11$, and has at least three prime divisors, hence is $30$ or $42$.
+If $n$ is even, these supports force $b$ to be a power of two
+and $3\mid N$. By \eqref{localJ}, $d$ is even, so
+$11^N\equiv1\pmod3$ contradicts odd $N$.
+Thus $b$ is odd. For its least prime divisor $q$, the order of
+$11$ modulo $q$ divides $11$: it divides $11b$ by \eqref{norms}
+and divides $q-1$, which is coprime to $b$.
+Order $11$ would force $q\ge23$, outside the possible supports;
+order one forces $q=5$. Since $N$ is not a prime power,
+\[
+ b=5^u,\qquad N=2^v3^w,\qquad u,v,w\ge1.
+\]
+The equality $11\cdot5^u+1=2^v3^w$, reduced modulo $3,8,5$ in
+turn, gives $u$ even, $v=2$, and $w\equiv2\pmod4$. Therefore
+\[
+ (2\cdot3^{w/2}-1)(2\cdot3^{w/2}+1)=11\cdot5^u.
+\]
+The left factors are coprime odd integers greater than one, so
+they must be $11$ and $5^u$. Their difference two is impossible.
+Interchanging $g,h$ proves the claim. Since $(a,b)=1$, their
+product is at least $13\cdot14=182$.
+\end{proof}
+
+\section{The archimedean estimate and the contradiction}
+
+Choose $g$ of smaller degree and put
+\[
+ \ell=\log n,\quad L=\log(2n+1),\quad A=\log a,\quad\delta=d/n.
+\]
+Then $A\ge\log13>51/20$ and $0<A/L<\delta<1/2$.
+
+\begin{lemma}\label{energy}
+If the logarithms of the root moduli of $g$ lie in an interval
+of width at most $W/n$, where $W>0$, then
+\begin{equation}\label{energyineq}
+ G_W:=\delta(\ell-A+\log W)-\tfrac12W\delta^2
+ \le\frac{R+\log g(1)}n-\delta\log(N/n).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Write $\alpha_i=\rho_i u_i$, with $|u_i|=1$, and set
+$\sigma=W/n$, $t=e^{-\sigma}$. For $i\ne j$,
+\[
+ \frac{|\alpha_i-\alpha_j|^2}{\rho_i\rho_j}
+ \le t^{-1}|1-tu_i\overline{u_j}|^2.
+\]
+The absolutely convergent logarithmic series gives
+\[
+ \sum_{i\ne j}\log|1-tu_i\overline{u_j}|
+ =-\sum_{k\ge1}\frac{t^k}{k}\Bigl|\sum_i u_i^k\Bigr|^2
+  -d\log(1-t).
+\]
+Summing the pairwise bound, and using
+$1-e^{-\sigma}\ge\sigma e^{-\sigma/2}$, yields
+\[
+ \log|\Disc(g)|\le(d-1)A+\tfrac12\sigma d^2-d\log\sigma.
+\]
+Insert this in \eqref{discidentity} and divide by $n$.
+\end{proof}
+
+Lemma~\ref{roots} permits $W=L$ and, for $n\ge8$, $W=L-11/6$.
+Since $\log g(1)\le\log(nN/2)=2B-\log2$, the term $-2B$ in
+\eqref{budgets} cancels. For either width and $n\ge182$, this gives
+\begin{equation}\label{upper1}
+ G_W<\ell/8+33/50.
+\end{equation}
+Indeed, $B<\ell+1/(2n)$, $C_8<13/20$, and the error above
+$\ell/8+13/20$ is at most
+$(\ell/8+13/20+1/16+1/(16n))/n<1/100$.
+
+There is a second bound when $n\ge1000$. Put $K=201/100$ and
+\[
+ S(A)=\tfrac3{20}A+\tfrac1{10}\log(KA)+\tfrac{97}{100}.
+\]
+The primes of $Q$ dividing $a$ have product at most $\sqrt a$;
+all other primes of $Q$ divide $bN$. Therefore
+$Q\le\sqrt a\,\rad(bN)<K a^{3/2}A$.
+For $p\ge11$, $p/(p^2-1)\le1/10$, while
+\[
+ \sum_{p=2,3,5,7}\left(\frac p{p^2-1}-\frac1{10}\right)\log p
+ <\frac{97}{100}.
+\]
+Consequently \eqref{budgets} and \eqref{energyineq} imply
+\begin{equation}\label{upper2}
+ G_L<S(A)+1/50.
+\end{equation}
+For the error estimate, also use $Q\le\sqrt{nN}$:
+the extra terms are less than $(2.1\ell+1)/n<1/50$.
+
+We finish by recording the elementary comparisons against these
+two upper bounds; the details are included to specify the constants.
+
+\begin{lemma}\label{comparison}
+Let $n\ge182$ and $51/20\le A<\delta L<L/2$.
+Take $W=L-11/6$ if $n<1000$, and $W=L$ otherwise.
+The bound \eqref{upper1}, together with \eqref{upper2} when
+$n\ge1000$, is impossible.
+\end{lemma}
+\begin{proof}
+First let $n\ge1000$. Then $\ell>6.9$, $0<L-\ell<0.7$ and
+$\log L>2$. The expression $G_L$ is increasing in $\delta$ on
+the stated interval, so
+\[
+ G_L>H(A):=\frac{A(\ell+\log L-3A/2)}{L}.
+\]
+The following bounds cover all possible $A$:
+\[
+\begin{array}{c|c}
+ \text{range of }A&\text{lower bound}\\ \hline
+ {[51/20,3]}&H(A)-S(A)>1/10\\
+ {[3,\ell/4]}&H(A)-S(A)>51/200\\
+ {[\max(3,\ell/4),L/2]}&H(A)-\ell/8>59/80.
+\end{array}
+\]
+An interval with reversed endpoints is ignored. For the first row,
+$(\ell+2-1.5A)/(\ell+0.7)$ increases with $\ell$ on this range, so
+\[
+ H(A)>H_0(A):=\frac{A(8.9-1.5A)}{7.6}.
+\]
+The function $H_0-S$ is concave on this interval; at its endpoints
+it exceeds $0.18$ and $0.1$, respectively, using
+$\log(2.55K)<1.7$ and $\log(3K)<2$.
+For the second row, $H(A)>5A/8$, and
+$19A/40-\log(KA)/10-0.97$ is increasing for $A\ge3$ and exceeds
+$0.255$ at three.
+For the last row use concavity of $H$. At $A=L/2$,
+\[
+ H(A)-\ell/8=\tfrac12\log L-\tfrac38(L-\ell)>59/80.
+\]
+At the other endpoint, if $6.9\le\ell\le12$, its lower bound is
+$3(\ell-2.5)/(\ell+0.7)-\ell/8$.
+This is concave in $\ell$; its endpoint values are
+$1329/1520$ and $189/254$, both greater than $59/80$.
+If $\ell\ge12$, the lower bound is
+$\ell(\ell/32+33/80)/(\ell+0.7)\ge189/254$.
+The first two rows contradict \eqref{upper2}, and the last
+contradicts \eqref{upper1}.
+
+Now let $182\le n<1000$ and take $W=L-11/6$. Write $c=L-\ell$.
+Then $5.2<\ell<7$, $0.69<c<0.7$ and $1.4<\log W<1.8$.
+Again $G_W$ increases with $\delta$, so
+\[
+ G_W>H_W(A):=\frac{A(\ell+\log W)}L
+             -\frac{A^2(L+W/2)}{L^2}.
+\]
+For $51/20\le A\le L/2$, we have $H_W(A)\ge H_W(L/2)$.
+To check this, factor their difference as
+\[
+ H_W(A)-H_W(L/2)=\frac{A-L/2}{L}\,T,\qquad
+ T=\ell+\log W-(A+L/2)(1+W/(2L)).
+\]
+The bracket satisfies
+\[
+ 2LT\le P(\ell,c):=\tfrac12\ell^2-\ell c-\tfrac32c^2
+             -\tfrac{47}{15}(\ell+c)+\tfrac{187}{40}<0.
+\]
+Indeed, $P$ decreases in $c$ and $P(\ell,0.69)$ increases in $\ell$
+on this rectangle; its maximum is
+\[
+ P(7,0.69)=-27869/60000<0.
+\]
+It follows that
+\[
+ G_W>H_W(L/2)=\ell/8+\tfrac12\log W-\tfrac38c+\tfrac{11}{48}
+ >\ell/8+\tfrac23,
+\]
+contradicting \eqref{upper1}, since $2/3>33/50$.
+All terminating decimals above are exact rational constants;
+the stated logarithmic bounds follow from the exponential series.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{main}]
+By Gauss's lemma, a reducible monic $f_n$ has a nontrivial monic
+integer factorization. Lemma~\ref{constants} forces $n\ge182$.
+Choosing its smaller-degree factor gives
+$51/20\le A<\delta L<L/2$, while the local resultant and
+discriminant estimates give \eqref{upper1} and \eqref{upper2}
+in their stated ranges. Lemma~\ref{comparison} is a contradiction.
+Thus $f_n$ is irreducible over $\mathbb Q$, and its monicity gives
+irreducibility in $\mathbb Z[x]$ as well.
+\end{proof}
+\end{document}
