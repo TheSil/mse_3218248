@@ -26,17 +26,32 @@ For every integer $n\ge2$, the polynomial
 is irreducible in $\mathbb Q[x]$ and in $\mathbb Z[x]$.
 \end{theorem}
 
-The proof has two stages. First, we compare local resultant bounds with
-complex root estimates and rule out factorizations whose two constant
+The argument is by contradiction. If a factorization existed, certain
+products of differences between roots would be nonzero integers.
+An exact identity would force their product to be large. We bound these
+integers in two ways: using ordinary distances between complex roots,
+and using the powers of primes that divide them. The bounds conflict.
+
+The main comparison first rules out factorizations whose two constant
 terms are at least $13$. Such a factorization would have $n\ge182$.
-The final section excludes smaller constant terms and completes the proof,
-including $2\le n<182$. The condition on the constant terms is essential
-in the first stage; it does not follow from $n\ge182$ alone.
+The final section excludes smaller constant terms, completing the proof
+also for $2\le n<182$. The first stage requires the condition on the
+constant terms; $n\ge182$ alone is not enough.
+
+We assume polynomial arithmetic, complex numbers, elementary linear
+algebra, and calculus. The products called discriminants and resultants
+are defined below. The local-field theorems needed for the prime-by-prime
+argument go beyond a usual undergraduate course; their precise working
+forms are stated before use, with a reference for their proofs.
 
 Throughout, $N=n+1$, $\ln$ denotes the natural logarithm, and $\rad(m)$ is the
 product of the distinct prime divisors of a positive integer $m$.
 
 \section{Root estimates}
+
+We first locate the roots in a thin annulus just outside the unit circle.
+The first lemma is used throughout. The next two give stronger lower
+bounds needed in the numerical comparison and in the final section.
 
 Direct multiplication gives
 \begin{equation}\label{identities}
@@ -57,7 +72,9 @@ If $|\alpha|\le1$, the first identity in \eqref{identities} gives
  n=\left|\sum_{j=1}^n\alpha^j\right|
  \le\sum_{j=1}^n|\alpha|^j\le n.
 \]
-Equality forces $\alpha=1$, which is not a root of $f_n$.
+Equality requires $|\alpha|=1$ and all the summands $\alpha^j$ to
+point in the direction of their positive real sum. In particular
+$\alpha$ is positive real, so $\alpha=1$, which is not a root of $f_n$.
 The second identity gives $\alpha^n=N-n/\alpha$, and therefore
 $|\alpha|^n\le N+n/|\alpha|<2n+1$.
 \end{proof}
@@ -74,7 +91,12 @@ If $k=0$, every $\alpha^j$, $1\le j\le n$,
 has positive imaginary part, contradicting $\sum_{j=1}^n\alpha^j=n$.
 Hence $\theta>2\pi/n$.
 
-When $\theta<\pi/2$, distance to the ray of argument $-\theta$ gives
+When $\theta<\pi/2$, squaring the root identity gives
+\[
+ \rho^{2n}=\left(n/\rho-N\cos\theta\right)^2+N^2\sin^2\theta
+ \ge N^2\sin^2\theta.
+\]
+Since $\sin\theta>2\theta/\pi$ for $0<\theta<\pi/2$, we obtain
 \[
  \rho^n\ge N\sin\theta>2N\theta/\pi>4N/n>4.
 \]
@@ -101,13 +123,19 @@ Finally $2\pi>e^{11/6}$, so taking logarithms proves the claim.
 
 \section{Factors, coefficients, and the discriminant identity}
 
-Suppose that $f_n=gh$, where $g,h\in\mathbb Z[x]$ are monic and
+By Gauss's lemma, a factorization over $\mathbb Q$ of a monic integer
+polynomial can be chosen with monic integer factors. Here \emph{monic}
+means that the leading coefficient is one.
+Suppose, then, that $f_n=gh$, where $g,h\in\mathbb Z[x]$ are monic and
 nonconstant. Until a smaller-degree factor is explicitly chosen, either
 factor may be called $g$. Write
 \[
  d=\deg g,\qquad a=g(0),\qquad b=h(0),\qquad
  g_j=[x^j]g.
 \]
+Thus $g_j$ means the coefficient of $x^j$; in particular $g_1$ is
+the linear coefficient. The equation $ab=n$ will connect these two
+constant terms to the original parameter.
 All real roots of the factors are negative. Each conjugate pair contributes
 $|t-\alpha|^2>0$ to evaluation at a real $t\ge0$. Consequently
 $g(t),h(t)>0$ for $t\ge0$; in particular $a,b,g(1),h(1)$ are
@@ -127,10 +155,13 @@ A common divisor of $a,b$, or of $a,g_1$, would divide both $n$ and
 $n-1$. Since $a,b>1$ are coprime, $ab\ge2\cdot3$.
 \end{proof}
 
-Define the integer
+The following integer compares the linear coefficient with the
+coefficient just below the leading one:
 \[
  J=g_1-a g_{d-1}.
 \]
+Its purpose is to turn the narrow annulus into a small nonzero integer.
+Later we will show that many primes must divide this same integer.
 
 \begin{lemma}[The coefficient difference]\label{Jidentity}
 If $\alpha_1,\ldots,\alpha_d$ are the roots of $g$, then
@@ -156,6 +187,10 @@ If $n\ge1000$, the bound improves to
 $|J|<\tfrac{201}{100}a\ln a$.
 \end{lemma}
 \begin{proof}
+For a root close to the unit circle, $\alpha$ is close to
+$\overline\alpha^{-1}$: the two numbers point in the same direction,
+and their distance is $|\alpha|-|\alpha|^{-1}$.
+Write $\sinh t=(e^t-e^{-t})/2$ for the hyperbolic sine.
 Conjugation permutes the roots, so Lemma~\ref{Jidentity} gives
 \[
  |J|=a\left|\sum_i(\alpha_i-\overline{\alpha_i}^{\,-1})\right|
@@ -170,7 +205,9 @@ Lemma~\ref{roots} gives
 The quantity $\ln(2n+1)/n$ decreases with $n$; it is below $1/2$
 for $n\ge6$ and below $1/100$ for $n\ge1000$.
 Here $n\ge6$ by Lemma~\ref{coprime-lemma}. The inequality
-$\sinh t/t\le(1-t^2/6)^{-1}$ gives the stated constants.
+$\sinh t/t\le(1-t^2/6)^{-1}$, for $0<t\le1/2$, follows by comparing power series.
+The two resulting factors are at most $48/23<21/10$ and
+$120000/59999<201/100$, respectively.
 \end{proof}
 
 \begin{lemma}[The derivative at a root]\label{root-derivative}
@@ -192,6 +229,30 @@ $F'(\alpha)=(\alpha-1)^2f_n'(\alpha)$.
 Lemma~\ref{roots} ensures $\alpha\ne0,1$, so division is legitimate
 and the resulting derivative is nonzero.
 \end{proof}
+
+We now define the two integer products used in the main comparison.
+For the distinct roots $\alpha_1,\ldots,\alpha_d$ of $g$,
+\[
+ \Disc(g)=\prod_{i<j}(\alpha_i-\alpha_j)^2,\qquad
+ \Res(g,h)=\prod_i h(\alpha_i)
+          =\prod_{g(\alpha)=0}\prod_{h(\beta)=0}(\alpha-\beta).
+\]
+The \emph{discriminant} measures differences within one factor; the
+\emph{resultant} uses differences between the two factors. Both products
+are nonzero because Lemma~\ref{root-derivative} rules out repeated roots
+of $f_n$. Their absolute values are products of ordinary distances.
+
+Both are integers. To see why, use the elementary theorem that a
+symmetric polynomial with integer coefficients is an integer polynomial
+in the elementary symmetric functions. Vi\`ete's formulas identify those
+functions with the coefficients of the monic polynomial. Apply this
+first to the roots of $g$, and, for the resultant, also to those of $h$.
+Separating root pairs also gives the useful identity
+\[
+ \Disc(gh)=\Disc(g)\Disc(h)\Res(g,h)^2.
+\]
+For a monic quadratic, the discriminant is the familiar linear
+coefficient squared minus four times the constant coefficient.
 
 \begin{lemma}[The discriminant--resultant identity]\label{disc-lemma}
 Every nontrivial monic integer factorization satisfies
@@ -237,13 +298,89 @@ the assertion about prime divisors.
 
 \section{Local root packets and resultant bounds}
 
+The resultant is an integer, so its size is determined by its prime
+factorization. We now bound the exponent of each possible prime divisor.
+This section introduces the local-field tools used below.
+
+For a nonzero rational number, $v_p$ is the exponent of $p$ in its
+numerator minus the exponent in its denominator. For example,
+$v_p(p)=1$ and $v_p(1/p)=-1$; put $v_p(0)=+\infty$.
+The essential rules are
+\[
+ v_p(xy)=v_p(x)+v_p(y),\qquad
+ v_p(x+y)\ge\min\{v_p(x),v_p(y)\},
+\]
+with equality in the second rule when the two valuations differ.
+Thus a sum cannot be zero if exactly one term has the smallest valuation.
+This is the divisibility analogue of a term being too large to cancel.
+
+The field $\mathbb Q_p$ completes rational arithmetic for the notion of
+closeness measured by divisibility by high powers of $p$. Its valuation
+extends uniquely to algebraic extensions, with the same rules.
+We write $v$ for this extension. It may take fractional values at
+algebraic roots, even though $v_p$ on rational numbers is integer-valued.
+
+An element is called \emph{integral} if its valuation is nonnegative.
+A \emph{unit} is an integral element whose inverse is also integral,
+equivalently an element of valuation zero. Integral elements can be
+reduced to a residue field of characteristic $p$: two have the same
+residue exactly when their difference has positive valuation.
+For ordinary integers, this agrees with reduction modulo $p$.
+In particular, different residues have a difference of valuation zero.
+
+We use two standard local-field tools in the following forms.\footnote{
+Proofs are in J. S. Milne,
+\href{https://www.jmilne.org/math/CourseNotes/ANT301.pdf}{\emph{Algebraic
+Number Theory}, version 3.01}, Theorem 7.38, Corollary 7.40,
+Propositions 7.44 and 7.50, and Corollary 7.51.
+Milne orders coefficients from the leading term; our horizontal
+coordinate is the power of $x$, so the Newton slopes have opposite signs.}
+
+\emph{Unramified extensions and Hensel lifting.}
+If $p\nmid m$, there is a finite extension $E/\mathbb Q_p$ containing
+all $m$th roots of unity, with $v(E^\times)=\mathbb Z$ and $v(p)=1$.
+This is an unramified extension. It is obtained from a finite residue
+field containing these roots; Hensel's theorem lifts simple roots of
+the reduction to roots of the polynomial over $E$.
+
+\emph{Newton polygon theorem.}
+For a monic polynomial over $E$ with nonzero constant term, plot each
+coefficient's index against its valuation, omitting zero coefficients.
+Take the lower convex boundary of these points. Each segment's horizontal
+length counts roots, with multiplicity; their valuation is the negative
+of its slope. The roots belonging to one segment form a monic factor
+over $E$. We call such a factor a \emph{packet}.
+
+For example, the three points below give a segment of length three and
+slope $-1/3$, followed by one of length six and slope $-1/6$.
+They describe three roots of valuation $1/3$ and six of valuation $1/6$.
+\begin{center}
+\small
+\setlength{\unitlength}{1mm}
+\begin{picture}(120,39)
+ \put(5,5){\vector(1,0){100}}
+ \put(5,5){\vector(0,1){28}}
+ \put(5,25){\line(3,-1){30}}
+ \put(35,15){\line(6,-1){60}}
+ \put(5,25){\circle*{1.2}}
+ \put(35,15){\circle*{1.2}}
+ \put(95,5){\circle*{1.2}}
+ \put(8,27){\makebox(0,0)[l]{$(0,2)$}}
+ \put(35,18){\makebox(0,0)[l]{$(3,1)$}}
+ \put(89,10){\makebox(0,0)[l]{$(9,0)$}}
+ \put(5,37){\makebox(0,0)[l]{valuation}}
+ \put(108,5){\makebox(0,0)[l]{index}}
+\end{picture}
+\end{center}
+Applying the theorem to a translated polynomial, with $y=x-\zeta$,
+describes the valuations $v(\alpha-\zeta)$ of roots near $\zeta$.
+Consecutive collinear points belong to one segment; this will matter
+when $p=2$.
+
 For a prime $p\mid nN$, write the member of $\{n,N\}$ divisible
 by $p$ as $p^r m$, where $p\nmid m$.
-Work in a finite unramified extension $E/\mathbb Q_p$ containing the
-$m$th roots of unity. Its valuation satisfies $v(p)=1$ and has value
-group $\mathbb Z$. Such a field is obtained from a suitable finite
-residue field by lifting roots of unity with Hensel's lemma.
-We extend $v$ to an algebraic closure of $E$.
+Use the field $E$ just described. The condition $p\nmid m$ ensures
+that the roots of $x^m-1$ are distinct in the residue field.
 
 \begin{lemma}[Residue classes and the root reducing to zero]\label{local-residues}
 Every root of $f_n$ is integral and reduces either to zero or to an
@@ -253,7 +390,9 @@ The zero class contains exactly one root, of valuation $r$, if
 $p\mid n$; otherwise it contains none.
 \end{lemma}
 \begin{proof}
-Integrality follows from monicity. Modulo $p$, the polynomial $F$ is
+Monicity gives integrality: a root of negative valuation would make
+the leading term the unique term of smallest valuation, preventing
+cancellation. Modulo $p$, the polynomial $F$ is
 $(x^m-1)^{p^r}$ if $p\mid N$, and $x(x^m-1)^{p^r}$ if $p\mid n$.
 The roots of $x^m-1$ are distinct because $p\nmid m$.
 Removing $(x-1)^2$ gives the stated counts for $f_n$.
@@ -261,6 +400,10 @@ When $p\mid n$, the Newton polygon segment of $F$ from $(0,r)$ to
 the unit linear coefficient at $(1,0)$ gives valuation $r$ for the
 single residue-zero root.
 \end{proof}
+
+The next observation explains why fractional root valuations can force
+irreducibility over $E$: selecting too few roots would produce a
+coefficient whose valuation is not an integer.
 
 \begin{lemma}[A denominator criterion]\label{local-denominator}
 Let $P\in E[x]$ be monic, $\zeta\in E$, and $e\ge1$ an integer.
@@ -281,14 +424,32 @@ For the unit roots, the common coefficient calculation is
  v_p\binom{n+1}j=r-v_p(j(j-1)),&p\mid n,\quad2\le j\le p^r+1.
 \end{array}
 \]
-These follow from $\binom{p^r m-1}k\equiv(-1)^k\pmod p$ for $k<p^r$.
+To verify them, use
+\[
+ \binom Nj=\frac Nj\binom{N-1}{j-1},\qquad
+ \binom{n+1}j=\frac{n(n+1)}{j(j-1)}\binom{n-1}{j-2}.
+\]
+The last binomial coefficient in each relevant formula is a unit:
+$\binom{p^r m-1}k\equiv(-1)^k\pmod p$ for $k<p^r$.
+Indeed, each factor $(p^r m-i)/i$ in its product formula is
+$-1$ modulo $p$, since $v_p(i)<r$.
 At residue one we remove the double root by using
 \begin{equation}\label{local-translate}
  f_n(1+y)=\sum_{k=0}^{n-1}\binom{n+1}{k+2}y^k.
 \end{equation}
-A \emph{packet} below means a monic factor in $E[x]$ supplied by a
-negative-slope segment of the Newton polygon. Its roots have a common
-displacement valuation $v(\alpha-\zeta)$, the negative of that slope.
+For $\zeta\ne1$, the constant term of $F(\zeta+y)$ is
+$N(1-\zeta)$ if $p\mid N$, and $n(1-\zeta)$ if $p\mid n$.
+Its valuation is therefore $r$. The linear coefficient is
+\[
+ F'(\zeta)=
+ \begin{cases}
+  0,&p\mid n,\\
+  N(\zeta^{-1}-1),&p\mid N,
+ \end{cases}
+\]
+and has valuation $r$ in the second case. Together with the higher
+coefficient valuations above, this determines the following three
+simple polygon shapes.
 
 \begin{lemma}[Packets at odd primes]\label{local-odd}
 Suppose $p$ is odd and $\zeta$ is an $m$th root of unity.
@@ -372,20 +533,31 @@ and~\ref{local-binary-one} give at most one irreducible packet in
 each unit residue class, so the resultant valuation is zero.
 
 For odd $p$ and $r\ge2$, a rational factor selects whole packets
-from Lemma~\ref{local-odd}. Within one residue class, packets
-$i<j$ contribute $e_i$ when assigned to different factors, because
-every cross-difference has valuation $1/e_j$.
-Thus the valuation is the weight of a graph cut with edge weight
-$e_i$ between $i<j$.
+from Lemma~\ref{local-odd}: $g,h$ are also polynomials over $E$,
+where these packets are irreducible. Within one residue class,
+packets $i<j$ have different displacement valuations. The valuation
+rule gives $v(\alpha-\beta)=1/e_j$ for a root from each packet.
+There are $e_i e_j$ such pairs, so their total contribution is $e_i$
+when the packets go to different factors.
+
+Represent each packet by a vertex, colored according to its assigned
+factor. Join vertices $i<j$ with an edge of weight $e_i$.
+Only edges between different colors contribute. A \emph{cut} is just
+such a division into two colors, so bounding the resultant has become
+the elementary problem of maximizing the sum of crossing edge weights.
 
 A maximum cut can place the last two vertices on opposite sides:
 if they agree, flipping the penultimate vertex gains $e_{r-1}$ and
 loses at most $\sum_{i<r-1}e_i\le e_{r-1}$.
-Deleting the two opposite vertices contributes
+With those two vertices opposite, each earlier vertex has exactly one
+crossing edge to them, regardless of its color. Including the edge
+between the last two vertices, deleting the pair therefore contributes
 $\sum_{i<r}e_i=p^{r-1}$, giving the recurrence for $C_p(r)$.
 At residue one the contribution is $p^{r-1}-2$, so its bound is
 $C_p(r)-2\lfloor r/2\rfloor$.
 
+At $p=2$, a quartic packet may split into two quadratics, with one
+assigned to each factor. We must also bound that internal contribution.
 For the binary quartic $P$ at a nontrivial residue root,
 described in Lemma~\ref{local-binary-away}, Lemma~\ref{root-derivative}
 gives $v(F'(\alpha))=r$ at its roots.
@@ -395,12 +567,17 @@ $v(P'(\alpha))=2$, and $v(\Disc P)=8$.
 If $P$ is split between $g$ and $h$, both parts are quadratic.
 After translation their constant coefficients have valuation one
 and their linear coefficients have valuation at least one.
-Each quadratic discriminant has valuation at least two, so the
-internal resultant valuation is at most $(8-2-2)/2=2$.
+Each quadratic discriminant has valuation at least two: its linear
+coefficient squared has valuation at least two, and four times its
+constant coefficient has valuation three. The discriminant product
+identity then makes the internal resultant valuation at most
+$(8-2-2)/2=2$.
 
 Two formal vertices of weight two, with an internal edge of weight
-two, therefore bound every allocation of this quartic. Their edges
-to later packets have exactly the stated weights. The cut calculation
+two, therefore bound every allocation of this quartic. Color them alike
+for a whole allocation, and differently for a quadratic split. This
+model allows every actual allocation without requiring a split to exist.
+Their edges to later packets have exactly the stated weights. The cut calculation
 applies to $2,2,4,8,\ldots$; for the packets of
 Lemma~\ref{local-binary-one}, the initial formal weight is zero.
 Summing over the $m$ residue classes proves \eqref{localbound}.
@@ -419,18 +596,27 @@ By Lemmas~\ref{local-odd} and~\ref{local-binary-away}, the selected
 degree at each nontrivial residue root is divisible by $p$, including
 a possible quadratic part of the binary quartic. Its contribution to
 $\sum_i(\alpha_i-\alpha_i^{-1})$ therefore vanishes in the residue field.
+For clarity, all roots in a packet reduce to the same $\zeta$, so
+the sum of $\alpha-\alpha^{-1}$ over those roots reduces to the
+packet's degree times $(\zeta-\zeta^{-1})$;
+that is zero when the degree is divisible by $p$.
 Each summand at residue one also vanishes. Lemma~\ref{Jidentity}
 now gives $v_p(J)>0$; since $J$ is an integer, $p\mid J$.
 Taking the product over the distinct primes proves the claim.
 \end{proof}
 
-For the global estimates write
+To turn bounds on prime exponents into a size bound, use
+$\ln|\Res(g,h)|=\sum_p v_p(\Res(g,h))\ln p$.
+For these global estimates write
 \[
  R=\ln|\Res(g,h)|,\qquad
  Q=\prod_{p^2\mid nN}p.
 \]
+Thus $Q$ records the distinct primes whose squares divide $nN$.
+The case $r=1$ of Lemma~\ref{local} explains why only these primes
+can contribute to the resultant.
 
-\begin{lemma}[Two resultant budgets]\label{resultant-budgets}
+\begin{lemma}[Two upper bounds for the resultant]\label{resultant-budgets}
 For every hypothetical factorization,
 \begin{equation}\label{prime-budget}
  R\le N\sum_{p\mid Q}\frac{p\ln p}{p^2-1}.
@@ -470,6 +656,12 @@ These two estimates give \eqref{budget-eight}.
 
 \section{The main comparison for \texorpdfstring{$n\ge182$}{n >= 182}}
 
+We now return to ordinary complex absolute values. An upper bound on
+the discriminant, together with the exact identity
+\eqref{discidentity}, forces the resultant to be large. The preceding
+section bounds that same resultant from above. We will make the
+contradiction explicit using logarithms, which turn products into sums.
+
 Choose $g$ of smaller degree and put
 \[
  L=\ln(2n+1),\qquad A=\ln a.
@@ -487,31 +679,57 @@ width at most $W/n$, where $W>0$, then
 \end{equation}
 \end{lemma}
 \begin{proof}
+The roots $\alpha_i$ are nonzero and distinct, so the logarithms of
+their moduli and pairwise distances below are defined.
 Put $u_i=\alpha_i/|\alpha_i|$ and $t=e^{-W/n}$.
 Thus $|u_i|=1$ and $0<t<1$. For $i\ne j$,
 \[
  \frac{|\alpha_i-\alpha_j|^2}{|\alpha_i|\,|\alpha_j|}
+ =\frac{|\alpha_i|}{|\alpha_j|}+\frac{|\alpha_j|}{|\alpha_i|}
+       -2\operatorname{Re}(u_i\overline{u_j}).
+\]
+The ratio of the two moduli lies between $t$ and $t^{-1}$, by the
+assumption on their logarithms. Its sum with its reciprocal is at most
+$t+t^{-1}$, giving
+\[
+ \frac{|\alpha_i-\alpha_j|^2}{|\alpha_i|\,|\alpha_j|}
  \le t^{-1}|1-tu_i\overline{u_j}|^2.
 \]
-The absolutely convergent logarithmic series gives
+We use the real logarithmic series
+\[
+ \ln|1-tz|=-\sum_{k\ge1}\frac{t^k}{k}\operatorname{Re}(z^k)
+ \qquad(|z|=1,\ 0<t<1).
+\]
+It follows by taking real parts of the geometric series and integrating
+in $t$. Absolute convergence allows us to sum over the finitely many
+root pairs. The identity
+$\sum_{i,j}u_i^k\overline{u_j^k}=|\sum_i u_i^k|^2$ gives
 \[
  \sum_{i\ne j}\ln|1-tu_i\overline{u_j}|
  =-\sum_{k\ge1}\frac{t^k}{k}\Bigl|\sum_i u_i^k\Bigr|^2
   -d\ln(1-t).
 \]
-Sum the pairwise inequality and discard the nonpositive series.
+The term $-d\ln(1-t)$ removes the $d$ diagonal terms $i=j$.
+Sum the pairwise inequality and discard the nonpositive series to get
+\[
+ \ln|\Disc(g)|\le(d-1)A+\frac{Wd(d-1)}{2n}-d\ln(1-t).
+\]
+Here each root modulus occurs in $d-1$ pairs, and there are
+$d(d-1)/2$ unordered pairs.
 Using $1-e^{-W/n}\ge(W/n)e^{-W/(2n)}$ then gives
-\eqref{disc-upper}.
+\eqref{disc-upper}: the two quadratic contributions combine as
+$d(d-1)+d=d^2$.
 \end{proof}
 
-For such a width define
+For such a width, abbreviate the expression that will occur in our
+lower bound for the resultant by
 \[
  G_W=\frac dn(\ln n-A+\ln W)-\frac{Wd^2}{2n^2}.
 \]
 Lemma~\ref{roots} permits $W=L$; Lemma~\ref{inner-sharp} also
 permits $W=L-11/6$ for $n\ge8$.
 
-\begin{lemma}[The energy inequality]\label{energy}
+\begin{lemma}[Combining the two root products]\label{energy}
 For every admissible width $W/n$,
 \begin{equation}\label{energyineq}
  G_W\le\frac{R+\ln g(1)}n-\frac dn\ln(N/n).
@@ -521,6 +739,14 @@ For every admissible width $W/n$,
 Taking logarithms of \eqref{discidentity} gives
 $\ln|\Disc(g)|+R+A+\ln g(1)=d\ln(nN)$.
 Insert \eqref{disc-upper}, rearrange, and divide by $n$.
+Explicitly, this gives
+\[
+ \frac{R+\ln g(1)}n
+ \ge\frac dn(\ln N-A+\ln W)-\frac{Wd^2}{2n^2}
+ =G_W+\frac dn\ln(N/n).
+\]
+Thus $G_W$ packages a necessary lower estimate; no new assumption
+has been introduced.
 \end{proof}
 
 \begin{lemma}[The uniform upper bound]\label{upper-uniform}
@@ -540,6 +766,9 @@ The error above $\tfrac18\ln n+13/20$ is at most
  \qquad(n\ge182),
 \]
 proving the stated bound.
+For this last numerical inequality, all the terms $(\ln n)/n$,
+$1/n$ and $1/n^2$ decrease for $n\ge182$. It therefore suffices to
+use $n=182$ and $\ln182<6$.
 \end{proof}
 
 For the next bound write
@@ -554,8 +783,10 @@ If $n\ge1000$, then
 \end{equation}
 \end{lemma}
 \begin{proof}
-The primes of $Q$ dividing $a$ have product at most $\sqrt a$;
-all other primes of $Q$ divide $bN$. By Lemmas~\ref{local-arithmetic}
+If $p\mid Q$ and $p\mid a$, then $p^2\mid a$, since
+$\gcd(a,bN)=1$. The product of these distinct primes is consequently
+at most $\sqrt a$. All other primes of $Q$ divide $bN$.
+By Lemmas~\ref{local-arithmetic}
 and~\ref{Jsize},
 \[
  Q\le\sqrt a\,\rad(bN)\le\sqrt a\,|J|<2.01a^{3/2}A.
@@ -565,12 +796,31 @@ For $p\ge11$, $p/(p^2-1)\le1/10$, while
  \sum_{p=2,3,5,7}\left(\frac p{p^2-1}-\frac1{10}\right)\ln p
  <97/100.
 \]
-Thus the prime sum in \eqref{prime-budget} is less than $S(A)$.
+Separating the four small primes from the rest gives
+\[
+ \sum_{p\mid Q}\frac{p\ln p}{p^2-1}
+ <\frac{\ln Q}{10}+\frac{97}{100}<S(A).
+\]
 Combine \eqref{prime-budget} with \eqref{energyineq}.
-To bound the error from $N/n$ and $\ln g(1)/n$, also use
-$Q\le\sqrt{nN}$; that error is less than
-$(2.1\ln n+1)/n<1/50$ for $n\ge1000$.
+The extra terms from $N/n=1+1/n$ and $\ln g(1)/n$ give
+\[
+\begin{aligned}
+ G_L&<S(A)+\frac{\tfrac1{10}\ln Q+\tfrac{97}{100}+\ln g(1)}n\\
+    &<S(A)+\frac{2.1\ln n+1}{n}<S(A)+\frac1{50}.
+\end{aligned}
+\]
+For the second line use $Q\le\sqrt{nN}$,
+$\ln g(1)\le\ln(nN)-\ln2$, and $\ln(nN)<2\ln n+1/n$.
+Again the error decreases with $n$, so $n=1000$ and $\ln1000<7$
+are sufficient to check the constant.
 \end{proof}
+
+Only elementary calculus remains in the main comparison. We repeatedly
+use two facts: an increasing function is bounded below by its left
+endpoint value, and a concave function lies above the chord joining
+its endpoints. In particular, a concave function is bounded below by
+the smaller endpoint value. These facts let a few exact endpoint
+estimates cover entire intervals.
 
 \begin{lemma}[Comparison for large parameters]\label{comparison-large}
 If $n\ge1000$ and $51/20\le A<dL/n<L/2$, the two bounds
@@ -578,11 +828,16 @@ If $n\ge1000$ and $51/20\le A<dL/n<L/2$, the two bounds
 \end{lemma}
 \begin{proof}
 Here $\ln n>6.9$, $0<L-\ln n<0.7$ and $\ln L>2$.
-The expression $G_L$ increases with $d/n$ on the stated interval, so
+Regard $G_L$ as a quadratic in the real ratio $d/n$, holding $n,A,L$
+fixed. Its derivative is $\ln n-A+\ln L-L(d/n)$, which is greater
+than $\ln L-(L-\ln n)>0$. Thus replacing $d/n$ by its smaller
+lower bound $A/L$ gives
 \[
  G_L>H(A):=\frac{A(\ln n+\ln L-3A/2)}L.
 \]
-The following bounds cover all possible $A$:
+The first two rows of the following table will contradict the upper
+bound $S(A)+0.02$; the last will contradict $\tfrac18\ln n+0.66$.
+Together the rows cover all possible $A$:
 \[
 \begin{array}{c|c}
  \text{range of }A&\text{lower bound}\\ \hline
@@ -597,23 +852,28 @@ so
 \[
  H(A)>\frac{A(8.9-1.5A)}{7.6}.
 \]
-Subtract $S(A)$ from the right-hand side. The resulting function is
-concave; its endpoint values exceed $0.18$ and $0.1$, using
+Subtract $S(A)$ from the right-hand side. The resulting function has
+second derivative $-3/7.6+1/(10A^2)<0$, so it is concave.
+Its endpoint values exceed $0.18$ and $0.1$, using
 $\ln(2.55\cdot2.01)<1.7$ and $\ln6.03<2$.
 For the second row, $H(A)>5A/8$, and
-$19A/40-\ln(2.01A)/10-0.97$ increases for $A\ge3$ and exceeds $0.255$
-at three.
+$19A/40-\ln(2.01A)/10-0.97$ has derivative
+$19/40-1/(10A)>0$ for $A\ge3$ and exceeds $0.255$ at three.
 
-For the last row use concavity of $H$. At $A=L/2$,
+For the last row, $H''(A)=-3/L<0$, so only its two endpoints matter.
+At $A=L/2$,
 \[
  H(A)-\tfrac18\ln n=\tfrac12\ln L-\tfrac38(L-\ln n)>59/80.
 \]
-At the other endpoint, for $6.9\le\ln n\le12$, a lower bound is
+The other endpoint is three when $\ln n\le12$, and
+$\tfrac14\ln n$ when $\ln n\ge12$.
+For $6.9\le\ln n\le12$, a lower bound is
 $3(\ln n-2.5)/(\ln n+0.7)-\tfrac18\ln n$.
 This is concave in $\ln n$, with endpoint values $1329/1520$ and
 $189/254$, both greater than $59/80$.
 For $\ln n\ge12$, the lower bound is
 $\frac{\ln n}{\ln n+0.7}(\tfrac1{32}\ln n+33/80)\ge189/254$.
+Both factors increase with $\ln n$, so evaluating at twelve suffices.
 The first two rows contradict \eqref{upper2}; the last contradicts
 \eqref{upper1}.
 \end{proof}
@@ -627,7 +887,10 @@ then
 \end{lemma}
 \begin{proof}
 Here $5.2<\ln n<7$, $0.69<L-\ln n<0.7$ and
-$1.4<\ln W<1.8$. Since $G_W$ increases with $d/n$,
+$1.4<\ln W<1.8$. The derivative of $G_W$ with respect to the real
+ratio $d/n$ is $\ln n-A+\ln W-W(d/n)$.
+Since $W\le L$, it exceeds $\ln W-(L-\ln n)>0.7$.
+Thus $G_W$ increases with $d/n$, giving
 \[
  G_W>H_W(A):=\frac{A(\ln n+\ln W)}L
              -\frac{A^2(L+W/2)}{L^2}.
@@ -686,6 +949,9 @@ Lemma~\ref{upper-uniform}, since $2/3>33/50$.
 It remains to rule out factors of constant term $2,\ldots,12$.
 The arguments in this section apply to every $n\ge2$, so they also
 settle all $n<182$. We again allow either factor to be called $g$.
+We will combine the small size of $J$ with the requirement
+$\rad(bN)\mid J$. The two lemmas after the parity observation provide
+the elementary congruences needed for the few remaining possibilities.
 
 \begin{lemma}[Parity of a factor degree]\label{degree-parity}
 Every hypothetical factorization satisfies
@@ -701,7 +967,7 @@ $2\mid n$; it belongs to $g$ exactly when $2\mid a$, by taking valuations of
 the product of its roots. This proves the congruence.
 \end{proof}
 
-\begin{lemma}[A norm identity and lower bound]\label{norm-metric}
+\begin{lemma}[A product identity and lower bound]\label{norm-metric}
 Every hypothetical factorization satisfies
 \begin{equation}\label{normmetric}
  a^N=N^d g(n/N)>(\sqrt{nN})^d.
@@ -724,7 +990,7 @@ Apply this with $t=n/N$ and multiply over the roots to obtain
 Multiplication by $N^d$ gives the stated lower bound.
 \end{proof}
 
-\begin{lemma}[The norm congruences]\label{norm-congruences}
+\begin{lemma}[Two congruences for the constant term]\label{norm-congruences}
 Every hypothetical factorization satisfies
 \begin{equation}\label{norms}
  a^N\equiv(-1)^d\pmod N,\qquad a^n\equiv1\pmod b.
@@ -733,13 +999,40 @@ Every hypothetical factorization satisfies
 \begin{proof}
 Expand $N^d g(n/N)$ in \eqref{normmetric}. Modulo $N$ only its
 leading term $n^d$ survives, giving the first congruence.
-In $(\mathbb Z/b\mathbb Z)[x]/(g)$, the element $x$ is a unit since
-$\gcd(a,b)=1$. The identity $F(x)=0$ reduces to $x^{n+1}-x=0$,
-so $x^n=1$. Multiplication by $x$ on this free module of rank $d$
-has determinant $(-1)^d a$. Taking determinants and using the
-evenness of $nd$, proved in Lemma~\ref{norm-metric}, gives the second
-congruence.
+
+For the second congruence we use a matrix version of polynomial long
+division. Let $C$ send the coefficient vector of a polynomial of degree
+below $d$ to the coefficient vector of the remainder of its product
+with $x$, after division by $g$. Relative to $1,x,\ldots,x^{d-1}$,
+its first $d-1$ columns shift one basis vector to the next, and its
+last column consists of the negated coefficients $-g_j$, $0\le j<d$.
+Thus $C$ is an integer matrix with
+\[
+ g(C)=0,\qquad \det C=(-1)^d a.
+\]
+The first identity says that multiplication by $g(x)$ always leaves
+zero remainder. Since $g$ divides $F$, it also gives $F(C)=0$.
+Modulo $b$, where $n\equiv0$ and $N\equiv1$, this becomes
+$C^{n+1}-C=0$. The determinant is invertible modulo $b$ because
+$\gcd(a,b)=1$; the adjugate formula therefore gives an inverse matrix.
+Multiplying by it yields $C^n=I$. Taking determinants and using
+even $nd$ now gives $a^n\equiv1\pmod b$.
 \end{proof}
+
+First we show that $N=n+1$ cannot be a prime power in a hypothetical
+factorization. This will make $N$ supply at least two distinct primes
+to $J$, and $b$ a third. For $N=p^r$, the \emph{cyclotomic polynomial}
+\[
+ \Phi_N(x)=\frac{x^N-1}{x^{N/p}-1}
+          =1+x^{N/p}+\cdots+x^{(p-1)N/p}
+\]
+has as its roots the primitive $N$th roots of unity: those whose
+multiplicative order is exactly $N$. Its degree is
+$\varphi(N)=N-N/p$, and $\Phi_N(1)=p$.
+Reduction modulo $p$ gives
+$\Phi_N(x)\equiv(x-1)^{\varphi(N)}$, since powers of $p$ satisfy
+$(x-1)^{p^j}=x^{p^j}-1$ in characteristic $p$.
+These explicit formulas provide the cyclotomic facts used below.
 
 \begin{lemma}[A cyclotomic resultant]\label{cyclotomic-resultant}
 Suppose $N=p^r$ is a prime power and $g$ is the smaller-degree
@@ -750,19 +1043,46 @@ factor of a hypothetical factorization. Then
 where $\Phi_N$ is the $N$th cyclotomic polynomial.
 \end{lemma}
 \begin{proof}
-We have $0<d<N/2\le\varphi(N)$ and
-$f_n\bmod p=(x-1)^{N-2}$.
-Every root $\alpha$ of $g$ therefore has
-$v_p(\alpha-1)\ge1/d>1/\varphi(N)$: its ramification index is at
-most its local field degree, which is at most $d$.
-By Eisenstein's criterion for $\Phi_N(x+1)$, a primitive $N$th root
-$\zeta$ satisfies $v_p(\zeta-1)=1/\varphi(N)$.
-Thus $v_p(\Phi_N(\alpha))=1$ and the resultant has valuation $d$.
+We compute the power of $p$ in this resultant and then show that
+no other prime divides it. Use the valuation at $p$.
+Since $g$ is the smaller factor,
+$0<d<N/2\le\varphi(N)$. The reduction of $f_n$ is
+$(x-1)^{N-2}$, so the monic reduction of $g$ is $(x-1)^d$.
+Every root $\alpha$ therefore has $v(\alpha-1)>0$.
 
-Also $f_n(\zeta)=N/(1-\zeta)$, whence
-$|\Res(f_n,\Phi_N)|=N^{\varphi(N)}/p$.
-The resultant for $g$ divides this integer, a pure power of $p$.
-Its absolute value is therefore $p^d$.
+All nonleading coefficients of $g(1+y)$ are divisible by $p$.
+At $y=\alpha-1$, every nonleading term has valuation at least one.
+The leading term cannot be the unique term of smaller valuation;
+hence $d\,v(\alpha-1)\ge1$.
+Similarly, $\Phi_N(x)\equiv(x-1)^{\varphi(N)}$ modulo $p$.
+Thus $\Phi_N(1+y)$ is monic, all its nonleading coefficients are
+divisible by $p$, and every primitive root reduces to one.
+Its constant coefficient is $\Phi_N(1)=p$. For a primitive root
+$\zeta$, we therefore have $v(\zeta-1)>0$.
+All terms of intermediate degree then have valuation greater than one.
+The constant and leading terms must have equal valuation, so
+\[
+ v(\alpha-1)\ge\frac1d>
+ \frac1{\varphi(N)}=v(\zeta-1).
+\]
+The unequal-valuation rule gives
+$v(\alpha-\zeta)=1/\varphi(N)$.
+Multiplying over the $\varphi(N)$ primitive roots shows that
+$v(\Phi_N(\alpha))=1$, and then over the $d$ roots of $g$ that
+$v_p(\Res(g,\Phi_N))=d$.
+
+For the prime divisors, evaluate \eqref{identities} at a primitive root:
+$f_n(\zeta)=N/(1-\zeta)$. Also
+$\prod_{\Phi_N(\zeta)=0}(1-\zeta)=\Phi_N(1)=p$. Consequently
+\[
+ |\Res(f_n,\Phi_N)|
+ =\left|\prod_{\Phi_N(\zeta)=0}f_n(\zeta)\right|
+ =N^{\varphi(N)}/p.
+\]
+The root-product definition gives
+$\Res(f_n,\Phi_N)=\Res(g,\Phi_N)\Res(h,\Phi_N)$.
+Both factors are integers, so the resultant for $g$ divides this pure
+power of $p$. Its already computed valuation proves the claim.
 \end{proof}
 
 \begin{lemma}[Prime-power successors]\label{primepower}
@@ -776,23 +1096,34 @@ For odd $p$ and $r\ge3$, Lemma~\ref{inner-four} gives
  \frac{|\alpha|^N-1}{|\alpha|^{N/p}+1}
  >\tfrac38|\alpha|^{\varphi(N)}.
 \]
+For the last step, factor out $|\alpha|^{\varphi(N)}$.
+The remaining numerator $1-|\alpha|^{-N}$ is greater than $3/4$,
+and the denominator $1+|\alpha|^{-N/p}$ is less than two.
 Multiply over the roots of $g$ and use Lemmas~\ref{cyclotomic-resultant}
 and~\ref{norm-metric}. This yields
 $p>\tfrac38(nN)^{(p-1)/(2p)}$, whereas
 $\sqrt{nN}>p^3-1>\tfrac89p^3$ gives
 $(nN)^{(p-1)/(2p)}>\tfrac89p^2\ge\tfrac83p$, a contradiction.
 
-For $p=2$, use $\Phi_N(x)=x^{N/2}+1$ instead. The same lemmas give
+For $p=2$, use $\Phi_N(x)=x^{N/2}+1$ instead.
+Since $|\alpha|^{N/2}>2$, its absolute value is greater than
+$|\alpha|^{N/2}/2$. The same lemmas give
 $2^d>a^{N/2}/2^d>\bigl((nN)^{1/4}/2\bigr)^d$, hence $nN<256$.
 This excludes $N\ge32$. For $N=4,8$ the constant $n$ is prime.
 For $N=16$, the constants would be $3,5$, contradicting
 $5^{15}\equiv1\pmod3$ in \eqref{norms}.
 
 If $N=p^2$ with odd $p$, one factor has even degree and the other
-odd degree. By \eqref{norms}, their constants are respectively
+odd degree, since their degrees sum to $p^2-2$.
+Fermat's congruence $a^{p^2}\equiv a\pmod p$ and \eqref{norms}
+show that their constants are respectively
 $1$ and $-1$ modulo $p$, so they are at least $p+1$ and $p-1$.
 Their product $p^2-1$ forces equality, contradicting coprimality.
 Finally, if $N=p$ is odd prime, $f_n(x+1)$ is Eisenstein at $p$.
+Indeed, every nonleading coefficient in \eqref{local-translate} is
+divisible by $p$, and the constant $p(p-1)/2$ is not divisible by
+$p^2$. Eisenstein's criterion says that these conditions force
+irreducibility over $\mathbb Q$.
 The value $N=2$ is excluded by $n\ge2$.
 \end{proof}
 
@@ -819,21 +1150,28 @@ No factor in a hypothetical factorization has constant term $11$.
 \begin{proof}
 Suppose $a=11$. The preceding radical bound gives $\rad(bN)<70$.
 It is even, is coprime to $11$, and has at least three prime divisors,
-so it is $30$ or $42$.
+so it is $30$ or $42$: the next allowable product of three distinct
+primes is already $2\cdot5\cdot7=70$.
 If $n$ is even, these supports force $b$ to be a power of two and
 $3\mid N$. Lemma~\ref{degree-parity} gives even $d$, so
 $11^N\equiv1\pmod3$ contradicts odd $N$.
 
 Thus $b$ is odd. For its least prime divisor $q$, the order of $11$
-modulo $q$ divides $11$: it divides $11b$ by \eqref{norms}, and
-divides $q-1$, which is coprime to $b$.
+modulo $q$ (the least positive exponent giving residue one) divides
+$11$: it divides $11b$ by \eqref{norms}, and divides $q-1$ by
+Fermat's theorem. Every prime divisor of $b$ is at least $q$, so
+$\gcd(b,q-1)=1$.
 Order $11$ would give $q\ge23$, outside the possible supports;
 order one forces $q=5$. Since $N$ is not a prime power,
 \[
  b=5^u,\qquad N=2^v3^w,\qquad u,v,w\ge1.
 \]
 Reduce $11\cdot5^u+1=2^v3^w$ modulo $3,8,5$, successively, to obtain
-$u$ even, $v=2$, and $w\equiv2\pmod4$. Hence
+$u$ even, $v=2$, and $w\equiv2\pmod4$.
+Indeed, modulo three we get $(-1)^{u+1}+1=0$; then $5^u\equiv1$
+modulo eight gives $11\cdot5^u+1\equiv4$, so $v=2$.
+Modulo five, $4\cdot3^w\equiv1$ forces $w\equiv2\pmod4$.
+Hence
 \[
  (2\cdot3^{w/2}-1)(2\cdot3^{w/2}+1)=11\cdot5^u.
 \]
