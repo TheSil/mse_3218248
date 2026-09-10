@@ -69,8 +69,8 @@ with $0<\theta<\pi$, one also has $\theta>2\pi/n$.
 \end{lemma}
 \begin{proof}
 The real and imaginary parts of $N-(n/\rho)e^{-i\theta}$ are positive,
-so $n\theta=2\pi k+\phi$, where $k\ge0$ is an integer and
-$0<\phi<\pi/2$. If $k=0$, every $\alpha^j$, $1\le j\le n$,
+so $2\pi k<n\theta<2\pi k+\pi/2$ for some integer $k\ge0$.
+If $k=0$, every $\alpha^j$, $1\le j\le n$,
 has positive imaginary part, contradicting $\sum_{j=1}^n\alpha^j=n$.
 Hence $\theta>2\pi/n$.
 
@@ -106,7 +106,7 @@ nonconstant. Until a smaller-degree factor is explicitly chosen, either
 factor may be called $g$. Write
 \[
  d=\deg g,\qquad a=g(0),\qquad b=h(0),\qquad
- g_j=[x^j]g,\quad h_j=[x^j]h.
+ g_j=[x^j]g.
 \]
 All real roots of the factors are negative. Each conjugate pair contributes
 $|t-\alpha|^2>0$ to evaluation at a real $t\ge0$. Consequently
@@ -122,7 +122,7 @@ In particular, $n\ge6$.
 \end{lemma}
 \begin{proof}
 Compare the constant and linear coefficients:
-$ab=n$ and $a h_1+b g_1=n-1$.
+$ab=n$ and $a h'(0)+b g_1=n-1$.
 A common divisor of $a,b$, or of $a,g_1$, would divide both $n$ and
 $n-1$. Since $a,b>1$ are coprime, $ab\ge2\cdot3$.
 \end{proof}
@@ -148,11 +148,12 @@ $\gcd(a,J)=1$. Since $a>1$, this excludes $J=0$.
 \end{proof}
 
 \begin{lemma}[The size of the coefficient difference]\label{Jsize}
-Put $L=\ln(2n+1)$ and $K_n=2\sinh(L/n)/(L/n)$. Then
+Every hypothetical factorization satisfies
 \begin{equation}\label{Jbound}
- 0<|J|\le K_n a\ln a.
+ 0<|J|<\tfrac{21}{10}a\ln a.
 \end{equation}
-Moreover, $K_n<21/10$ for $n\ge6$, and $K_n<201/100$ for $n\ge1000$.
+If $n\ge1000$, the bound improves to
+$|J|<\tfrac{201}{100}a\ln a$.
 \end{lemma}
 \begin{proof}
 Conjugation permutes the roots, so Lemma~\ref{Jidentity} gives
@@ -160,10 +161,15 @@ Conjugation permutes the roots, so Lemma~\ref{Jidentity} gives
  |J|=a\left|\sum_i(\alpha_i-\overline{\alpha_i}^{\,-1})\right|
  \le a\sum_i2\sinh(\ln|\alpha_i|).
 \]
-Use $0<\ln|\alpha_i|<L/n$, the monotonicity of $\sinh t/t$, and
-$\sum_i\ln|\alpha_i|=\ln a$.
-The quantity $L/n$ decreases with $n$; it is below $1/2$ for $n\ge6$
-and below $1/100$ for $n\ge1000$. The inequality
+Since $\sinh t/t$ increases and $\sum_i\ln|\alpha_i|=\ln a$,
+Lemma~\ref{roots} gives
+\[
+ |J|\le
+ \frac{2\sinh\bigl(\ln(2n+1)/n\bigr)}{\ln(2n+1)/n}\,a\ln a.
+\]
+The quantity $\ln(2n+1)/n$ decreases with $n$; it is below $1/2$
+for $n\ge6$ and below $1/100$ for $n\ge1000$.
+Here $n\ge6$ by Lemma~\ref{coprime-lemma}. The inequality
 $\sinh t/t\le(1-t^2/6)^{-1}$ gives the stated constants.
 \end{proof}
 
@@ -231,8 +237,8 @@ the assertion about prime divisors.
 
 \section{Local root packets and resultant bounds}
 
-For a prime $p\mid nN$, let $M$ be the member of $\{n,N\}$ divisible
-by $p$, and write $M=p^r m$, where $p\nmid m$.
+For a prime $p\mid nN$, write the member of $\{n,N\}$ divisible
+by $p$ as $p^r m$, where $p\nmid m$.
 Work in a finite unramified extension $E/\mathbb Q_p$ containing the
 $m$th roots of unity. Its valuation satisfies $v(p)=1$ and has value
 group $\mathbb Z$. Such a field is obtained from a suitable finite
@@ -263,9 +269,9 @@ then every monic divisor of $P$ in $E[x]$ has degree divisible by $e$.
 In particular, $P$ is irreducible if $\deg P=e$.
 \end{lemma}
 \begin{proof}
-For a monic divisor $A$ of degree $s$, multiplication over its roots
-gives $v(A(\zeta))=s/e$. This belongs to the value group $\mathbb Z$
-of $E$, so $e\mid s$.
+For a monic divisor $A$, multiplication over its roots gives
+$v(A(\zeta))=\deg(A)/e$. This belongs to the value group $\mathbb Z$
+of $E$, so $e\mid\deg A$.
 \end{proof}
 
 For the unit roots, the common coefficient calculation is
@@ -275,7 +281,7 @@ For the unit roots, the common coefficient calculation is
  v_p\binom{n+1}j=r-v_p(j(j-1)),&p\mid n,\quad2\le j\le p^r+1.
 \end{array}
 \]
-These follow from $\binom{M-1}k\equiv(-1)^k\pmod p$ for $k<p^r$.
+These follow from $\binom{p^r m-1}k\equiv(-1)^k\pmod p$ for $k<p^r$.
 At residue one we remove the double root by using
 \begin{equation}\label{local-translate}
  f_n(1+y)=\sum_{k=0}^{n-1}\binom{n+1}{k+2}y^k.
@@ -286,12 +292,12 @@ displacement valuation $v(\alpha-\zeta)$, the negative of that slope.
 
 \begin{lemma}[Packets at odd primes]\label{local-odd}
 Suppose $p$ is odd and $\zeta$ is an $m$th root of unity.
-The roots reducing to $\zeta$ form irreducible packets of degrees
+The roots reducing to $\zeta$ form irreducible packets. The first has
+degree $e_1=p$ if $\zeta\ne1$, and $e_1=p-2$ if $\zeta=1$.
+The subsequent degrees are
 \[
- e_1=p-2\varepsilon,\qquad
- e_j=p^{j-1}(p-1)\quad(2\le j\le r),
+ e_j=p^{j-1}(p-1)\quad(2\le j\le r).
 \]
-where $\varepsilon=1$ if $\zeta=1$, and $\varepsilon=0$ otherwise.
 Every root of packet $j$ satisfies $v(\alpha-\zeta)=1/e_j$.
 \end{lemma}
 \begin{proof}
@@ -411,8 +417,7 @@ If $p\mid bN$, then $p\nmid a$, so all roots of $g$ are units.
 Reduce in the residue field of a valued splitting extension.
 By Lemmas~\ref{local-odd} and~\ref{local-binary-away}, the selected
 degree at each nontrivial residue root is divisible by $p$, including
-a possible quadratic
-part of the binary quartic. Its contribution to
+a possible quadratic part of the binary quartic. Its contribution to
 $\sum_i(\alpha_i-\alpha_i^{-1})$ therefore vanishes in the residue field.
 Each summand at residue one also vanishes. Lemma~\ref{Jidentity}
 now gives $v_p(J)>0$; since $J$ is an integer, $p\mid J$.
@@ -421,7 +426,7 @@ Taking the product over the distinct primes proves the claim.
 
 For the global estimates write
 \[
- R=\ln|\Res(g,h)|,\qquad B=\tfrac12\ln(nN),\qquad
+ R=\ln|\Res(g,h)|,\qquad
  Q=\prod_{p^2\mid nN}p.
 \]
 
@@ -432,10 +437,7 @@ For every hypothetical factorization,
 \end{equation}
 For $n\ge15$ one also has
 \begin{equation}\label{budget-eight}
- R\le\left(\frac N8-2\right)B+NC_8,
- \qquad
- C_8=\tfrac38\ln2+\tfrac5{24}\ln3+
-     \tfrac3{40}\ln5+\tfrac1{56}\ln7<\tfrac{13}{20}.
+ R<\left(\frac N{16}-1\right)\ln(nN)+\frac{13N}{20}.
 \end{equation}
 \end{lemma}
 \begin{proof}
@@ -448,27 +450,32 @@ The recurrence in Lemma~\ref{local} gives
 \]
 Since $C_p(1)=0$, this proves \eqref{prime-budget}.
 
-Put $B_0=\sum_p\lfloor v_p(nN)/2\rfloor\ln p\le B$.
-Retain the negative term in \eqref{localbound}, and replace each
-$M\in\{n,N\}$ by $N$ in its positive term.
+Retain the negative term in \eqref{localbound}, and use $p^r m\le N$
+in its positive term.
 Subtracting $1/8$ from each summand in the displayed series leaves
 positive excess only in the first layers for $p=2,3,5,7$. Hence
 \[
- R\le(N/8-2)B_0+NC_8\le(N/8-2)B+NC_8,
+\begin{aligned}
+ R&\le(N/8-2)\sum_{p\mid nN}\lfloor v_p(nN)/2\rfloor\ln p\\
+  &\quad+N\left(\tfrac38\ln2+\tfrac5{24}\ln3+
+                \tfrac3{40}\ln5+\tfrac1{56}\ln7\right).
+\end{aligned}
 \]
-where the last step uses $N\ge16$.
+Since $N\ge16$, we can use
+$\sum_{p\mid nN}\lfloor v_p(nN)/2\rfloor\ln p\le\tfrac12\ln(nN)$.
 The bounds $\ln2<0.7$, $\ln3<1.1$, $\ln5<13/8$ and $\ln7<2$
-give $C_8<4363/6720<13/20$.
+put the four-logarithm sum below $4363/6720<13/20$.
+These two estimates give \eqref{budget-eight}.
 \end{proof}
 
 \section{The main comparison for \texorpdfstring{$n\ge182$}{n >= 182}}
 
 Choose $g$ of smaller degree and put
 \[
- \ell=\ln n,\qquad L=\ln(2n+1),\qquad
- A=\ln a,\qquad\delta=d/n.
+ L=\ln(2n+1),\qquad A=\ln a.
 \]
-The annulus gives $0<A/L<\delta<1/2$.
+Thus $L/n$ bounds the logarithmic root moduli, while $A$ is their
+sum for the factor $g$. The annulus gives $0<A/L<d/n<1/2$.
 We first establish estimates for all such factorizations. The assumption
 $a,b\ge13$ will enter only in Proposition~\ref{large-constants}.
 
@@ -480,10 +487,10 @@ width at most $W/n$, where $W>0$, then
 \end{equation}
 \end{lemma}
 \begin{proof}
-Write $\alpha_i=\rho_i u_i$, with $|u_i|=1$, and put
-$\sigma=W/n$, $t=e^{-\sigma}$. For $i\ne j$,
+Put $u_i=\alpha_i/|\alpha_i|$ and $t=e^{-W/n}$.
+Thus $|u_i|=1$ and $0<t<1$. For $i\ne j$,
 \[
- \frac{|\alpha_i-\alpha_j|^2}{\rho_i\rho_j}
+ \frac{|\alpha_i-\alpha_j|^2}{|\alpha_i|\,|\alpha_j|}
  \le t^{-1}|1-tu_i\overline{u_j}|^2.
 \]
 The absolutely convergent logarithmic series gives
@@ -493,13 +500,13 @@ The absolutely convergent logarithmic series gives
   -d\ln(1-t).
 \]
 Sum the pairwise inequality and discard the nonpositive series.
-Using $1-e^{-\sigma}\ge\sigma e^{-\sigma/2}$ then gives
-$\ln|\Disc(g)|\le(d-1)A+\sigma d^2/2-d\ln\sigma$.
+Using $1-e^{-W/n}\ge(W/n)e^{-W/(2n)}$ then gives
+\eqref{disc-upper}.
 \end{proof}
 
 For such a width define
 \[
- G_W=\delta(\ell-A+\ln W)-\tfrac12W\delta^2.
+ G_W=\frac dn(\ln n-A+\ln W)-\frac{Wd^2}{2n^2}.
 \]
 Lemma~\ref{roots} permits $W=L$; Lemma~\ref{inner-sharp} also
 permits $W=L-11/6$ for $n\ge8$.
@@ -507,7 +514,7 @@ permits $W=L-11/6$ for $n\ge8$.
 \begin{lemma}[The energy inequality]\label{energy}
 For every admissible width $W/n$,
 \begin{equation}\label{energyineq}
- G_W\le\frac{R+\ln g(1)}n-\delta\ln(N/n).
+ G_W\le\frac{R+\ln g(1)}n-\frac dn\ln(N/n).
 \end{equation}
 \end{lemma}
 \begin{proof}
@@ -519,25 +526,25 @@ Insert \eqref{disc-upper}, rearrange, and divide by $n$.
 \begin{lemma}[The uniform upper bound]\label{upper-uniform}
 If $n\ge182$, then for every admissible width,
 \begin{equation}\label{upper1}
- G_W<\ell/8+33/50.
+ G_W<\tfrac18\ln n+33/50.
 \end{equation}
 \end{lemma}
 \begin{proof}
 Since $g(1)h(1)=nN/2$ and both factors are positive integers,
-$\ln g(1)\le2B-\ln2$.
-In \eqref{energyineq}, this cancels the $-2B$ term of
-\eqref{budget-eight}. Now $B<\ell+1/(2n)$ and $C_8<13/20$.
-The error above $\ell/8+13/20$ is at most
+$\ln g(1)\le\ln(nN)-\ln2$.
+In \eqref{energyineq}, this cancels the $-\ln(nN)$ term of
+\eqref{budget-eight}. Use $\ln(nN)<2\ln n+1/n$.
+The error above $\tfrac18\ln n+13/20$ is at most
 \[
- \frac{\ell/8+13/20+1/16+1/(16n)}n<1/100
+ \frac{\tfrac18\ln n+13/20+1/16+1/(16n)}n<1/100
  \qquad(n\ge182),
 \]
 proving the stated bound.
 \end{proof}
 
-Put $K=201/100$ and
+For the next bound write
 \[
- S(A)=\tfrac3{20}A+\tfrac1{10}\ln(KA)+\tfrac{97}{100}.
+ S(A)=\tfrac3{20}A+\tfrac1{10}\ln(2.01A)+\tfrac{97}{100}.
 \]
 
 \begin{lemma}[The upper bound from prime support]\label{upper-support}
@@ -551,7 +558,7 @@ The primes of $Q$ dividing $a$ have product at most $\sqrt a$;
 all other primes of $Q$ divide $bN$. By Lemmas~\ref{local-arithmetic}
 and~\ref{Jsize},
 \[
- Q\le\sqrt a\,\rad(bN)\le\sqrt a\,|J|<K a^{3/2}A.
+ Q\le\sqrt a\,\rad(bN)\le\sqrt a\,|J|<2.01a^{3/2}A.
 \]
 For $p\ge11$, $p/(p^2-1)\le1/10$, while
 \[
@@ -562,88 +569,99 @@ Thus the prime sum in \eqref{prime-budget} is less than $S(A)$.
 Combine \eqref{prime-budget} with \eqref{energyineq}.
 To bound the error from $N/n$ and $\ln g(1)/n$, also use
 $Q\le\sqrt{nN}$; that error is less than
-$(2.1\ell+1)/n<1/50$ for $n\ge1000$.
+$(2.1\ln n+1)/n<1/50$ for $n\ge1000$.
 \end{proof}
 
 \begin{lemma}[Comparison for large parameters]\label{comparison-large}
-If $n\ge1000$ and $51/20\le A<\delta L<L/2$, the two bounds
+If $n\ge1000$ and $51/20\le A<dL/n<L/2$, the two bounds
 \eqref{upper1} with $W=L$ and \eqref{upper2} are incompatible.
 \end{lemma}
 \begin{proof}
-Here $\ell>6.9$, $0<L-\ell<0.7$ and $\ln L>2$.
-The expression $G_L$ increases with $\delta$ on the stated interval, so
+Here $\ln n>6.9$, $0<L-\ln n<0.7$ and $\ln L>2$.
+The expression $G_L$ increases with $d/n$ on the stated interval, so
 \[
- G_L>H(A):=\frac{A(\ell+\ln L-3A/2)}L.
+ G_L>H(A):=\frac{A(\ln n+\ln L-3A/2)}L.
 \]
 The following bounds cover all possible $A$:
 \[
 \begin{array}{c|c}
  \text{range of }A&\text{lower bound}\\ \hline
  {[51/20,3]}&H(A)-S(A)>1/10\\
- {[3,\ell/4]}&H(A)-S(A)>51/200\\
- {[\max(3,\ell/4),L/2]}&H(A)-\ell/8>59/80.
+ {[3,\tfrac14\ln n]}&H(A)-S(A)>51/200\\
+ {[\max(3,\tfrac14\ln n),L/2]}&H(A)-\tfrac18\ln n>59/80.
 \end{array}
 \]
 An interval with reversed endpoints is ignored.
-For the first row, $(\ell+2-1.5A)/(\ell+0.7)$ increases with $\ell$,
+For the first row, $(\ln n+2-1.5A)/(\ln n+0.7)$ increases with $\ln n$,
 so
 \[
- H(A)>H_0(A):=\frac{A(8.9-1.5A)}{7.6}.
+ H(A)>\frac{A(8.9-1.5A)}{7.6}.
 \]
-The function $H_0-S$ is concave; its endpoint values exceed $0.18$
-and $0.1$, using $\ln(2.55K)<1.7$ and $\ln(3K)<2$.
+Subtract $S(A)$ from the right-hand side. The resulting function is
+concave; its endpoint values exceed $0.18$ and $0.1$, using
+$\ln(2.55\cdot2.01)<1.7$ and $\ln6.03<2$.
 For the second row, $H(A)>5A/8$, and
-$19A/40-\ln(KA)/10-0.97$ increases for $A\ge3$ and exceeds $0.255$
+$19A/40-\ln(2.01A)/10-0.97$ increases for $A\ge3$ and exceeds $0.255$
 at three.
 
 For the last row use concavity of $H$. At $A=L/2$,
 \[
- H(A)-\ell/8=\tfrac12\ln L-\tfrac38(L-\ell)>59/80.
+ H(A)-\tfrac18\ln n=\tfrac12\ln L-\tfrac38(L-\ln n)>59/80.
 \]
-At the other endpoint, for $6.9\le\ell\le12$, a lower bound is
-$3(\ell-2.5)/(\ell+0.7)-\ell/8$.
-This is concave in $\ell$, with endpoint values $1329/1520$ and
+At the other endpoint, for $6.9\le\ln n\le12$, a lower bound is
+$3(\ln n-2.5)/(\ln n+0.7)-\tfrac18\ln n$.
+This is concave in $\ln n$, with endpoint values $1329/1520$ and
 $189/254$, both greater than $59/80$.
-For $\ell\ge12$, the lower bound is
-$\ell(\ell/32+33/80)/(\ell+0.7)\ge189/254$.
+For $\ln n\ge12$, the lower bound is
+$\frac{\ln n}{\ln n+0.7}(\tfrac1{32}\ln n+33/80)\ge189/254$.
 The first two rows contradict \eqref{upper2}; the last contradicts
 \eqref{upper1}.
 \end{proof}
 
 \begin{lemma}[Comparison in the intermediate range]\label{comparison-middle}
-If $182\le n<1000$, $51/20\le A<\delta L<L/2$, and $W=L-11/6$,
+If $182\le n<1000$, $51/20\le A<dL/n<L/2$, and $W=L-11/6$,
 then
 \[
- G_W>\ell/8+2/3.
+ G_W>\tfrac18\ln n+2/3.
 \]
 \end{lemma}
 \begin{proof}
-Put $c=L-\ell$. Here $5.2<\ell<7$, $0.69<c<0.7$ and
-$1.4<\ln W<1.8$. Since $G_W$ increases with $\delta$,
+Here $5.2<\ln n<7$, $0.69<L-\ln n<0.7$ and
+$1.4<\ln W<1.8$. Since $G_W$ increases with $d/n$,
 \[
- G_W>H_W(A):=\frac{A(\ell+\ln W)}L
+ G_W>H_W(A):=\frac{A(\ln n+\ln W)}L
              -\frac{A^2(L+W/2)}{L^2}.
 \]
 For $51/20\le A\le L/2$, we have $H_W(A)\ge H_W(L/2)$.
 Indeed,
 \[
- H_W(A)-H_W(L/2)=\frac{A-L/2}{L}\,T,\qquad
- T=\ell+\ln W-(A+L/2)(1+W/(2L)),
+\begin{aligned}
+ H_W(A)-H_W(L/2)&=\frac{A-L/2}{L}\\
+ &\quad\times\left[\ln n+\ln W-(A+L/2)(1+W/(2L))\right].
+\end{aligned}
 \]
-and
+The bracket is negative, because
 \[
- 2LT\le P(\ell,c):=\tfrac12\ell^2-\ell c-\tfrac32c^2
-             -\tfrac{47}{15}(\ell+c)+\tfrac{187}{40}<0.
+\begin{aligned}
+ &2L\left[\ln n+\ln W-(A+L/2)(1+W/(2L))\right]\\
+ &\qquad\le L\left(2\ln n-\tfrac32L-\tfrac{47}{15}\right)
+                  +\tfrac{187}{40}
+ \le-\frac{27869}{60000}<0.
+\end{aligned}
 \]
-The polynomial $P$ decreases in $c$, and $P(\ell,0.69)$ increases
-in $\ell$ on this rectangle. Its maximum is
-\[
- P(7,0.69)=-27869/60000<0.
-\]
+The first bound uses $A\ge51/20$, $\ln W<1.8$ and $W=L-11/6$.
+For the second, the polynomial expression decreases with $L$.
+Substituting $L=\ln n+0.69$ gives an increasing function of $\ln n$
+on $[5.2,7]$, whose value at seven is $-27869/60000$.
+The prefactor $(A-L/2)/L$ is nonpositive, proving the desired
+comparison with $H_W(L/2)$.
 Consequently
 \[
- G_W>H_W(L/2)=\ell/8+\tfrac12\ln W-\tfrac38c+\tfrac{11}{48}
- >\ell/8+\tfrac23.
+\begin{aligned}
+ G_W&>H_W(L/2)\\
+    &=\tfrac18\ln n+\tfrac12\ln W-\tfrac38(L-\ln n)+\tfrac{11}{48}\\
+    &>\tfrac18\ln n+\tfrac23.
+\end{aligned}
 \]
 All terminating decimals in these comparisons are exact rational constants;
 the logarithmic bounds follow from the exponential series.
@@ -656,7 +674,7 @@ $g(0),h(0)\ge13$.
 \begin{proof}
 If $a,b\ge13$, Lemma~\ref{coprime-lemma} gives
 $n=ab\ge13\cdot14=182$. Choose $g$ of smaller degree. Then
-$A\ge\ln13>51/20$ and $A<\delta L<L/2$.
+$A\ge\ln13>51/20$ and $A<dL/n<L/2$.
 For $n\ge1000$, Lemmas~\ref{upper-uniform}, \ref{upper-support}
 and~\ref{comparison-large} contradict one another.
 For $182\le n<1000$, Lemma~\ref{comparison-middle} contradicts
@@ -684,23 +702,26 @@ the product of its roots. This proves the congruence.
 \end{proof}
 
 \begin{lemma}[A norm identity and lower bound]\label{norm-metric}
-With $t=n/N$ one has
+Every hypothetical factorization satisfies
 \begin{equation}\label{normmetric}
- a^N=N^d g(t)>(\sqrt{nN})^d.
+ a^N=N^d g(n/N)>(\sqrt{nN})^d.
 \end{equation}
 \end{lemma}
 \begin{proof}
 The integer $nd$ is even. This is automatic if $n$ is even; if $n$
 is odd, then $N$ is even and $F(x)>0$ for $x<0$, so $g$ has no real
 roots and $d$ is even.
-Multiplying $\alpha^N=N(\alpha-t)$ over the roots of $g$ now gives
-$a^N=N^d g(t)$, with the signs cancelling because $nd$ is even.
-For $|z|>1$,
+Multiplying $\alpha^N=N(\alpha-n/N)$ over the roots of $g$ now gives
+$a^N=N^d g(n/N)$, with the signs cancelling because $nd$ is even.
+For $0<t<1$ and $|z|>1$,
 \[
  |z-t|^2-t|z-1|^2=(1-t)(|z|^2-t)>0.
 \]
-Multiplication gives $g(t)>t^{d/2}g(1)\ge t^{d/2}$, and hence
-$N^d g(t)>(\sqrt{nN})^d$.
+Apply this with $t=n/N$ and multiply over the roots to obtain
+\[
+ g(n/N)>(n/N)^{d/2}g(1)\ge(n/N)^{d/2}.
+\]
+Multiplication by $N^d$ gives the stated lower bound.
 \end{proof}
 
 \begin{lemma}[The norm congruences]\label{norm-congruences}
@@ -748,7 +769,7 @@ Its absolute value is therefore $p^d$.
 If $n\ge2$ and $n+1$ is a prime power, then $f_n$ is irreducible.
 \end{lemma}
 \begin{proof}
-Suppose $N=p^r$ and choose $g$ of smaller degree. Put $H=\sqrt{nN}$.
+Suppose $N=p^r$ and choose $g$ of smaller degree.
 For odd $p$ and $r\ge3$, Lemma~\ref{inner-four} gives
 \[
  |\Phi_N(\alpha)|\ge
@@ -756,12 +777,13 @@ For odd $p$ and $r\ge3$, Lemma~\ref{inner-four} gives
  >\tfrac38|\alpha|^{\varphi(N)}.
 \]
 Multiply over the roots of $g$ and use Lemmas~\ref{cyclotomic-resultant}
-and~\ref{norm-metric}. This yields $p>\tfrac38H^{1-1/p}$, whereas
-$H>p^3-1>\tfrac89p^3$ gives
-$H^{1-1/p}>\tfrac89p^2\ge\tfrac83p$, a contradiction.
+and~\ref{norm-metric}. This yields
+$p>\tfrac38(nN)^{(p-1)/(2p)}$, whereas
+$\sqrt{nN}>p^3-1>\tfrac89p^3$ gives
+$(nN)^{(p-1)/(2p)}>\tfrac89p^2\ge\tfrac83p$, a contradiction.
 
 For $p=2$, use $\Phi_N(x)=x^{N/2}+1$ instead. The same lemmas give
-$2^d>a^{N/2}/2^d>(\sqrt H/2)^d$, hence $H<16$.
+$2^d>a^{N/2}/2^d>\bigl((nN)^{1/4}/2\bigr)^d$, hence $nN<256$.
 This excludes $N\ge32$. For $N=4,8$ the constant $n$ is prime.
 For $N=16$, the constants would be $3,5$, contradicting
 $5^{15}\equiv1\pmod3$ in \eqref{norms}.
